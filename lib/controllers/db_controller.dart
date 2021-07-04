@@ -11,7 +11,7 @@ class DBController {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  void deleteDeepWorkData(Future<Database> database) async {
+  void deleteAllData(Future<Database> database) async {
     final db = await database;
     db.delete('deepwork', where: 'id = id', whereArgs: []);
   }
@@ -19,11 +19,6 @@ class DBController {
   Future<List<DeepWorkModel>> showAllData(Future<Database> database) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('deepwork');
-
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
-    maps.forEach((element) {
-      print(element);
-    });
     return List.generate(maps.length, (i) {
       return DeepWorkModel(
           hoursOfDeepWork: maps[i]['hoursOfDeepWork'],
